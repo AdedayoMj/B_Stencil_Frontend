@@ -40,7 +40,7 @@ export class AppRoot {
       this.isLoading = expenseStore.isLoading();
     });
     this.isLoading = expenseStore.isLoading();
-    
+
     expenseStore.fetchExpenses().then(() => {
       this.expenses = expenseStore.getState().expenses;
     });
@@ -71,7 +71,6 @@ export class AppRoot {
 
   render() {
     const themeClasses = this.theme === 'light' ? 'app-light' : 'app-dark';
-console.log(this.isLoading);
 
     return (
       <main class={themeClasses}>
