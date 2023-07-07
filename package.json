@@ -25,7 +25,8 @@
     "test.watch": "stencil test --spec --e2e --watchAll",
     "generate": "stencil generate",
     "prettier": "prettier --write .",
-    "lint": "eslint . --ext .tsx,.ts"
+    "lint": "eslint . --ext .tsx,.ts",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
     "@stencil/core": "^4.0.0",

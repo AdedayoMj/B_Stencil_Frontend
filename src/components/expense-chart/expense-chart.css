@@ -1,16 +1,21 @@
-
 h2 {
   text-align: center;
 }
-canvas {
+
+.chart-container {
   display: flex;
   justify-content: center;
-  width: 500px;
-  padding: 5rem 6rem 2rem 5rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
+
+.chart-container canvas {
+  max-width: 100%;
+  padding: 0.5px;
+}
+
 @media (max-width: 768px) {
-  canvas {
+  .chart-container canvas {
     width: 100%;
-    padding: 0.5px;
   }
 }

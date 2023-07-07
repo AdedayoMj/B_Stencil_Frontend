@@ -29,6 +29,13 @@ export class AppRoot {
   }
 
   connectedCallback() {
+    const cachedTheme = localStorage.getItem('theme');
+    if (cachedTheme) {
+      this.theme = cachedTheme;
+    } else {
+      this.theme = 'light';
+    }
+    
     expenseStore.fetchExpenses().then(() => {
       this.expenses = expenseStore.getState().expenses;
     });
@@ -55,6 +62,7 @@ export class AppRoot {
 
   render() {
     const themeClasses = this.theme === 'light' ? 'app-light' : 'app-dark';
+console.log(themeClasses);
 
     return (
       <main class={themeClasses}>

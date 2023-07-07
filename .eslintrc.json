@@ -5,5 +5,16 @@
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module"
-  }
+  },
+  "globals": {
+    "h": "writable"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.tsx"],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "off"
+      }
+    }
+  ]
 }

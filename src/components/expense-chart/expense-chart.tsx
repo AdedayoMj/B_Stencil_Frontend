@@ -168,7 +168,10 @@ expensesChanged() {
       return (
         <div>
           <h2>Stacked Bar of Monthly Expenses</h2>
+          <div class="chart-container">
           <canvas ></canvas>
+          </div>
+          
         </div>
       );
   }

@@ -68,6 +68,7 @@ export const expenseStore = {
 
   setTheme: (theme: string) => {
     state.theme = theme;
+    localStorage.setItem('theme', theme);
   },
   setShowForm: (showForm: boolean) => {
     state.showForm = showForm;
@@ -81,7 +82,14 @@ export const expenseStore = {
 
   fetchExpenses: async () => {
     const cachedExpenses = getCache('expenses');
-
+    const cachedTheme = localStorage.getItem('theme');
+    
+    if (cachedTheme) {
+      expenseStore.setTheme(cachedTheme);
+    } else {
+      expenseStore.setTheme('light'); 
+    }
+  
     if (cachedExpenses) {
       expenseStore.setExpense(cachedExpenses);
       return;
