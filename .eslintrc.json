@@ -1,0 +1,9 @@
+{
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:stencil/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "stencil"],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  }
+}
