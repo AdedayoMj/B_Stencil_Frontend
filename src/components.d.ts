@@ -19,6 +19,8 @@ export namespace Components {
     interface ExpenseList {
         "expenses": ExpenseData[];
     }
+    interface WaveLoading {
+    }
 }
 declare global {
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
@@ -45,11 +47,18 @@ declare global {
         prototype: HTMLExpenseListElement;
         new (): HTMLExpenseListElement;
     };
+    interface HTMLWaveLoadingElement extends Components.WaveLoading, HTMLStencilElement {
+    }
+    var HTMLWaveLoadingElement: {
+        prototype: HTMLWaveLoadingElement;
+        new (): HTMLWaveLoadingElement;
+    };
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
         "expense-chart": HTMLExpenseChartElement;
         "expense-form": HTMLExpenseFormElement;
         "expense-list": HTMLExpenseListElement;
+        "wave-loading": HTMLWaveLoadingElement;
     }
 }
 declare namespace LocalJSX {
@@ -63,11 +72,14 @@ declare namespace LocalJSX {
     interface ExpenseList {
         "expenses"?: ExpenseData[];
     }
+    interface WaveLoading {
+    }
     interface IntrinsicElements {
         "app-root": AppRoot;
         "expense-chart": ExpenseChart;
         "expense-form": ExpenseForm;
         "expense-list": ExpenseList;
+        "wave-loading": WaveLoading;
     }
 }
 export { LocalJSX as JSX };
@@ -78,6 +90,7 @@ declare module "@stencil/core" {
             "expense-chart": LocalJSX.ExpenseChart & JSXBase.HTMLAttributes<HTMLExpenseChartElement>;
             "expense-form": LocalJSX.ExpenseForm & JSXBase.HTMLAttributes<HTMLExpenseFormElement>;
             "expense-list": LocalJSX.ExpenseList & JSXBase.HTMLAttributes<HTMLExpenseListElement>;
+            "wave-loading": LocalJSX.WaveLoading & JSXBase.HTMLAttributes<HTMLWaveLoadingElement>;
         }
     }
 }

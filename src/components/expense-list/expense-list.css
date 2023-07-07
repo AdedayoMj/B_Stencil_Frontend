@@ -23,7 +23,7 @@ th {
 }
 
 th {
-  background-color: #0c91b3;
+  background-color: var(--app-button-color2);
 }
 
 .pagination {
@@ -36,17 +36,17 @@ th {
   margin: 0 1rem;
   padding: 0.5rem;
   border: none;
-  background-color: #0c91b3;
+  background-color: var(--app-button-color2);
   color: white;
   cursor: pointer;
 }
 
 .pagination button:hover {
-  background-color: #066d8b;
+  background-color: var(--app-button-color);
 }
 
 .pagination .active {
-  background-color: #066d8b;
+  background-color: var(--app-button-color);
 }
 
 .actions button {
@@ -55,13 +55,13 @@ th {
   border: none;
   border-radius: 4px;
   width: 4rem;
-  background-color: #0c91b3;
+  background-color: var(--app-button-color2);
   color: white;
   cursor: pointer;
 }
 
 .actions button:hover {
-  background-color: #066d8b;
+  background-color: var(--app-button-color);
 }
 .actions .delete {
   background-color: #e41919;

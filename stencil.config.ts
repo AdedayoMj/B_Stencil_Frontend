@@ -15,13 +15,11 @@ export const config: Config = {
     },
     {
       type: 'www',
-      serviceWorker: null, 
-      copy: [
-        { src: 'global' },
-      ],
+      serviceWorker: null,
     },
   ],
+  globalStyle: 'src/global/app.css',
   testing: {
-    browserHeadless: "new",
+    browserHeadless: 'new',
   },
 };

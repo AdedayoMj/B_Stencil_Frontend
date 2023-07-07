@@ -7,6 +7,7 @@ interface AppState {
   showForm: boolean;
   currentId: string;
   action: string;
+  isLoading: boolean;
 }
 
 const intialState: AppState = {
@@ -15,10 +16,11 @@ const intialState: AppState = {
   showForm: false,
   currentId: '',
   action: 'create',
+  isLoading: false,
 };
 
 const apiUrl = 'https://betsson-backend-ed81ddb5eddb.herokuapp.com/expense';
-// const apiUrl = process.env.API_URL;
+
 const { state, onChange } = createStore(intialState);
 
 const CAHCE_EXPIRATION = 60 * 5;
@@ -46,6 +48,12 @@ export const expenseStore = {
   getState: () => state,
   subscribe: onChange,
 
+  setLoading: (isLoading: boolean) => {
+    state.isLoading = isLoading;
+  },
+
+  isLoading: () => state.isLoading,
+
   setExpense: (expenses: ExpenseData[]) => {
     state.expenses = expenses;
     setCache('expenses', expenses);
@@ -60,7 +68,7 @@ export const expenseStore = {
     state.expenses = state.expenses.filter(expense => expense._id !== expenseId);
     setCache('expenses', state.expenses);
   },
-  
+
   updateExpense: (expenseId: string, updatedExpense: ExpenseData) => {
     state.expenses = state.expenses.map(expense => (expense._id === expenseId ? { ...expense, ...updatedExpense } : expense));
     setCache('expenses', state.expenses);
@@ -81,17 +89,20 @@ export const expenseStore = {
   },
 
   fetchExpenses: async () => {
+    expenseStore.setLoading(true);
+
     const cachedExpenses = getCache('expenses');
     const cachedTheme = localStorage.getItem('theme');
-    
+
     if (cachedTheme) {
       expenseStore.setTheme(cachedTheme);
     } else {
-      expenseStore.setTheme('light'); 
+      expenseStore.setTheme('light');
     }
-  
+
     if (cachedExpenses) {
       expenseStore.setExpense(cachedExpenses);
+      expenseStore.setLoading(false);
       return;
     }
 
@@ -107,11 +118,15 @@ export const expenseStore = {
     } catch (error) {
       console.error('Error fetching expenses:', error);
       throw error;
+    } finally {
+      expenseStore.setLoading(false);
     }
   },
 
   createExpense: async (requestData: CreateExpenseData) => {
     try {
+      expenseStore.setLoading(true);
+
       const response = await fetch(`${apiUrl}/createExpense`, {
         method: 'POST',
         headers: {
@@ -128,11 +143,15 @@ export const expenseStore = {
     } catch (error) {
       console.error('Error creating expense:', error);
       throw error;
+    }finally {
+      expenseStore.setLoading(false);
     }
   },
 
   deleteExpenseApi: async (expenseId: string) => {
     try {
+      expenseStore.setLoading(true);
+
       const response = await fetch(`${apiUrl}/${expenseId}`, {
         method: 'DELETE',
       });
@@ -145,10 +164,13 @@ export const expenseStore = {
     } catch (error) {
       console.error('Error deleting expense:', error);
       throw error;
-    }
+    }finally {
+    expenseStore.setLoading(false);
+  }
   },
   updateExpenseApi: async (expenseId: string, updatedExpense: CreateExpenseData) => {
     try {
+      expenseStore.setLoading(true);
       const response = await fetch(`${apiUrl}/update/${expenseId}`, {
         method: 'PATCH',
         headers: {
@@ -165,6 +187,8 @@ export const expenseStore = {
     } catch (error) {
       console.error('Error updating expense:', error);
       throw error;
+    }finally {
+      expenseStore.setLoading(false);
     }
   },
 

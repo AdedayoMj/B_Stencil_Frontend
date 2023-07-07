@@ -1,7 +1,7 @@
 import { Component, h, Prop, Watch, Element } from '@stencil/core';
 import { Chart, CategoryScale, LinearScale, BarController, BarElement } from 'chart.js';
 import { ExpenseData } from '../../types';
-// import { expenseStore } from '../../store/expense-store';
+
 
 @Component({
   tag: 'expense-chart',
@@ -10,15 +10,11 @@ import { ExpenseData } from '../../types';
 })
 export class ExpenseChart {
   @Element() el: HTMLElement;
-  @Prop() expenses : ExpenseData[];
- 
+  @Prop() expenses: ExpenseData[];
+
   private chart: Chart;
 
-  
-
-
   connectedCallback() {
-    
     const canvasObserver = new MutationObserver(() => {
       const canvas = this.el.shadowRoot.querySelector('canvas');
       if (canvas) {
@@ -31,7 +27,7 @@ export class ExpenseChart {
         }
       }
     });
-  
+
     const shadowRoot = this.el.shadowRoot;
     if (shadowRoot) {
       canvasObserver.observe(shadowRoot, { childList: true, subtree: true });
@@ -40,67 +36,65 @@ export class ExpenseChart {
       console.error('Shadow root not found');
     }
   }
-  
 
   @Watch('expenses')
-expensesChanged() {
-  if (this.chart) {
-    this.chart.destroy();
+  expensesChanged() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+    const canvas = this.el.shadowRoot.querySelector('canvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      this.renderChart(ctx);
+    } else {
+      console.error('Canvas element not found');
+    }
   }
-  const canvas = this.el.shadowRoot.querySelector('canvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    this.renderChart(ctx);
-  } else {
-    console.error('Canvas element not found');
-  }
-}
-
 
   renderChart(ctx: CanvasRenderingContext2D) {
+      const aggregatedData = this.expensesByMonth();
+      const labels = Object.keys(aggregatedData).sort((a, b) => {
+        const aDate = new Date(a);
+        const bDate = new Date(b);
+        return aDate.getTime() - bDate.getTime();
+      });
 
-    const aggregatedData = this.expensesByMonth();
-    const labels = Object.keys(aggregatedData).sort((a, b) => {
-      const aDate = new Date(a);
-      const bDate = new Date(b);
-      return aDate.getTime() - bDate.getTime();
-    });
+      const datasets = this.createDatasets(aggregatedData);
 
-    const datasets = this.createDatasets(aggregatedData);
+      Chart.register(CategoryScale, LinearScale, BarController, BarElement);
 
-    Chart.register(CategoryScale, LinearScale, BarController, BarElement);
-
-    this.chart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: datasets,
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: {
-            type: 'category',
-            stacked: true,
-          },
-          y: {
-            stacked: true,
-            beginAtZero: true,
-          },
+      this.chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: datasets,
         },
-        plugins: {
-          tooltip: {
-            callbacks: {
-              label: context => {
-                const dataset = context.dataset;
-                const value = dataset.data[context.dataIndex] as number;
-                return value.toLocaleString(undefined, { maximumFractionDigits: 2 });
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              type: 'category',
+              stacked: true,
+            },
+            y: {
+              stacked: true,
+              beginAtZero: true,
+            },
+          },
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: context => {
+                  const dataset = context.dataset;
+                  const value = dataset.data[context.dataIndex] as number;
+                  return value.toLocaleString(undefined, { maximumFractionDigits: 2 });
+                },
               },
             },
           },
         },
-      },
-    });
+      });
+
   }
 
   expensesByMonth() {
@@ -128,7 +122,6 @@ expensesChanged() {
       const backgroundColors = this.getRandomColors(expenses.length);
 
       if (expenses.length > 0) {
-        // Only create datasets for months with expenses
         for (let i = 0; i < expenses.length; i++) {
           const value = expenses[i].amount;
 
@@ -164,15 +157,15 @@ expensesChanged() {
   }
 
   render() {
-    if (this.expenses.length > 0)
-      return (
-        <div>
-          <h2>Stacked Bar of Monthly Expenses</h2>
-          <div class="chart-container">
-          <canvas ></canvas>
+    if (this.expenses.length > 0) {
+        return (
+          <div>
+            <h2>Stacked Bar of Monthly Expenses</h2>
+            <div class="chart-container">
+              <canvas></canvas>
+            </div>
           </div>
-          
-        </div>
-      );
+        );
+      }
   }
 }

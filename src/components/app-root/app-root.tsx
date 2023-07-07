@@ -15,6 +15,7 @@ export class AppRoot {
   @State() theme: string = expenseStore.getState().theme;
   @State() expenses: ExpenseData[] = [];
   @State() showForm: boolean = expenseStore.getState().showForm;
+  @State() isLoading = false
 
   @Method()
   async toggleTheme() {
@@ -35,6 +36,10 @@ export class AppRoot {
     } else {
       this.theme = 'light';
     }
+    expenseStore.subscribe('isLoading', () => {
+      this.isLoading = expenseStore.isLoading();
+    });
+    this.isLoading = expenseStore.isLoading();
     
     expenseStore.fetchExpenses().then(() => {
       this.expenses = expenseStore.getState().expenses;
@@ -43,12 +48,16 @@ export class AppRoot {
     expenseStore.subscribe('expenses', () => {
       this.expenses = expenseStore.getState().expenses;
     });
+    this.expenses = expenseStore.getState().expenses;
     expenseStore.subscribe('theme', () => {
       this.theme = expenseStore.getState().theme;
     });
     expenseStore.subscribe('showForm', () => {
       this.showForm = expenseStore.getState().showForm;
     });
+
+   
+    
   }
 
   renderIcon(): JSX.Element {
@@ -62,7 +71,7 @@ export class AppRoot {
 
   render() {
     const themeClasses = this.theme === 'light' ? 'app-light' : 'app-dark';
-console.log(themeClasses);
+console.log(this.isLoading);
 
     return (
       <main class={themeClasses}>
@@ -81,6 +90,7 @@ console.log(themeClasses);
           {this.showForm ? <expense-form></expense-form> : null}
           <expense-list expenses={this.expenses}></expense-list>
           <expense-chart expenses={this.expenses}></expense-chart>
+          {this.isLoading &&<wave-loading></wave-loading>}
         </div>
       </main>
     );
