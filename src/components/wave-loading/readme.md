@@ -1,4 +1,6 @@
-# expense-form
+# wave-loading
+
+
 
 <!-- Auto Generated Below -->
 
@@ -12,8 +14,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  app-root --> expense-form
-  style expense-form fill:#f9f,stroke:#333,stroke-width:4px
+  app-root --> wave-loading
+  style wave-loading fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
