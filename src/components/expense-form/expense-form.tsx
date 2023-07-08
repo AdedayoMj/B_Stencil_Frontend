@@ -1,4 +1,4 @@
-import { Component, Host, State, h } from '@stencil/core';
+import { Component, State, h, Element, Prop } from '@stencil/core';
 import { CreateExpenseData } from '../../types';
 import { expenseStore } from '../../store/expense-store';
 
@@ -8,6 +8,7 @@ import { expenseStore } from '../../store/expense-store';
   shadow: true,
 })
 export class ExpenseForm {
+  @Prop() showForm = false;
   @State() action: string = expenseStore.getState().action;
   @State() _id: string = expenseStore.getState().currentId;
 
@@ -18,6 +19,7 @@ export class ExpenseForm {
   };
 
   @State() formErrors: { [key: string]: string } = {};
+  @Element() element: HTMLElement;
 
   connectedCallback() {
     if (this.action === 'update' && this._id) {
@@ -32,6 +34,9 @@ export class ExpenseForm {
         throw new Error(`Expense not found for _id: ${this._id}`);
       }
     }
+    this.element.addEventListener('modalClose', () => {
+      this.resetForm();
+    });
   }
 
   handleInput(event: Event) {
@@ -95,8 +100,8 @@ export class ExpenseForm {
 
   render() {
     return (
-      <Host>
-        <form onSubmit={e => this.handleSubmit(e)}>
+      <app-modal isOpen={this.showForm}>
+        <form class="form" onSubmit={e => this.handleSubmit(e)}>
           <div class="form-group">
             <label htmlFor="date">Date</label>
             <input type="date" id="date" value={this.formData.date} name="date" onInput={e => this.handleInput(e)} class={this.formErrors.date ? 'error' : ''} />
@@ -104,11 +109,11 @@ export class ExpenseForm {
           </div>
           <div class="form-group">
             <label htmlFor="description">Expense Details</label>
-            <input
-              type="text"
+            <textarea
               id="description"
               value={this.formData.description}
               name="description"
+              rows={5}
               onInput={e => this.handleInput(e)}
               class={this.formErrors.description ? 'error' : ''}
             />
@@ -123,7 +128,7 @@ export class ExpenseForm {
             <button type="submit">Submit</button>
           </div>
         </form>
-      </Host>
+      </app-modal>
     );
   }
 }

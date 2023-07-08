@@ -8,6 +8,9 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ExpenseData } from "./types";
 export { ExpenseData } from "./types";
 export namespace Components {
+    interface AppModal {
+        "isOpen": boolean;
+    }
     interface AppRoot {
         "toggleTheme": () => Promise<void>;
     }
@@ -15,6 +18,7 @@ export namespace Components {
         "expenses": ExpenseData[];
     }
     interface ExpenseForm {
+        "showForm": boolean;
     }
     interface ExpenseList {
         "expenses": ExpenseData[];
@@ -23,6 +27,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLAppModalElement extends Components.AppModal, HTMLStencilElement {
+    }
+    var HTMLAppModalElement: {
+        prototype: HTMLAppModalElement;
+        new (): HTMLAppModalElement;
+    };
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
     }
     var HTMLAppRootElement: {
@@ -54,6 +64,7 @@ declare global {
         new (): HTMLWaveLoadingElement;
     };
     interface HTMLElementTagNameMap {
+        "app-modal": HTMLAppModalElement;
         "app-root": HTMLAppRootElement;
         "expense-chart": HTMLExpenseChartElement;
         "expense-form": HTMLExpenseFormElement;
@@ -62,12 +73,16 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface AppModal {
+        "isOpen"?: boolean;
+    }
     interface AppRoot {
     }
     interface ExpenseChart {
         "expenses"?: ExpenseData[];
     }
     interface ExpenseForm {
+        "showForm"?: boolean;
     }
     interface ExpenseList {
         "expenses"?: ExpenseData[];
@@ -75,6 +90,7 @@ declare namespace LocalJSX {
     interface WaveLoading {
     }
     interface IntrinsicElements {
+        "app-modal": AppModal;
         "app-root": AppRoot;
         "expense-chart": ExpenseChart;
         "expense-form": ExpenseForm;
@@ -86,6 +102,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "app-modal": LocalJSX.AppModal & JSXBase.HTMLAttributes<HTMLAppModalElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "expense-chart": LocalJSX.ExpenseChart & JSXBase.HTMLAttributes<HTMLExpenseChartElement>;
             "expense-form": LocalJSX.ExpenseForm & JSXBase.HTMLAttributes<HTMLExpenseFormElement>;

@@ -23,10 +23,8 @@ export class AppRoot {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     expenseStore.setTheme(newTheme);
   }
-
-  toggleForm() {
-    const currentShowForm = expenseStore.getState().showForm;
-    expenseStore.setShowForm(!currentShowForm);
+  openForm() {
+    expenseStore.setShowForm(true);
   }
 
   connectedCallback() {
@@ -79,11 +77,10 @@ export class AppRoot {
         </header>
 
         <div class="container">
-          <button class="createExpenseButton" onClick={() => this.toggleForm()}>
-            {this.showForm ? 'Close Form' : 'Create Expense'}
+          <button class="createExpenseButton" onClick={() => this.openForm()}>
+            Create Expense
           </button>
-
-          {this.showForm ? <expense-form></expense-form> : null}
+          {this.showForm && <expense-form showForm={this.showForm}></expense-form>}
           <expense-list expenses={this.expenses}></expense-list>
           <expense-chart expenses={this.expenses}></expense-chart>
           {this.isLoading && <wave-loading></wave-loading>}
