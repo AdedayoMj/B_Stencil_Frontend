@@ -16,9 +16,7 @@ export const config: Config = {
     {
       type: 'www',
       serviceWorker: null,
-      copy:[
-        {src:"_redirects"}
-      ]
+      copy: [{ src: '_redirects' }],
     },
   ],
   globalStyle: 'src/global/app.css',

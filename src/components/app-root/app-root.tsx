@@ -15,7 +15,7 @@ export class AppRoot {
   @State() theme: string = expenseStore.getState().theme;
   @State() expenses: ExpenseData[] = [];
   @State() showForm: boolean = expenseStore.getState().showForm;
-  @State() isLoading = false
+  @State() isLoading = false;
 
   @Method()
   async toggleTheme() {
@@ -55,9 +55,6 @@ export class AppRoot {
     expenseStore.subscribe('showForm', () => {
       this.showForm = expenseStore.getState().showForm;
     });
-
-   
-    
   }
 
   renderIcon(): JSX.Element {
@@ -89,7 +86,7 @@ export class AppRoot {
           {this.showForm ? <expense-form></expense-form> : null}
           <expense-list expenses={this.expenses}></expense-list>
           <expense-chart expenses={this.expenses}></expense-chart>
-          {this.isLoading &&<wave-loading></wave-loading>}
+          {this.isLoading && <wave-loading></wave-loading>}
         </div>
       </main>
     );

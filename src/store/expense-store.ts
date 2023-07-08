@@ -143,7 +143,7 @@ export const expenseStore = {
     } catch (error) {
       console.error('Error creating expense:', error);
       throw error;
-    }finally {
+    } finally {
       expenseStore.setLoading(false);
     }
   },
@@ -164,9 +164,9 @@ export const expenseStore = {
     } catch (error) {
       console.error('Error deleting expense:', error);
       throw error;
-    }finally {
-    expenseStore.setLoading(false);
-  }
+    } finally {
+      expenseStore.setLoading(false);
+    }
   },
   updateExpenseApi: async (expenseId: string, updatedExpense: CreateExpenseData) => {
     try {
@@ -187,7 +187,7 @@ export const expenseStore = {
     } catch (error) {
       console.error('Error updating expense:', error);
       throw error;
-    }finally {
+    } finally {
       expenseStore.setLoading(false);
     }
   },

@@ -2,7 +2,6 @@ import { Component, h, Prop, Watch, Element } from '@stencil/core';
 import { Chart, CategoryScale, LinearScale, BarController, BarElement } from 'chart.js';
 import { ExpenseData } from '../../types';
 
-
 @Component({
   tag: 'expense-chart',
   styleUrl: 'expense-chart.css',
@@ -52,49 +51,48 @@ export class ExpenseChart {
   }
 
   renderChart(ctx: CanvasRenderingContext2D) {
-      const aggregatedData = this.expensesByMonth();
-      const labels = Object.keys(aggregatedData).sort((a, b) => {
-        const aDate = new Date(a);
-        const bDate = new Date(b);
-        return aDate.getTime() - bDate.getTime();
-      });
+    const aggregatedData = this.expensesByMonth();
+    const labels = Object.keys(aggregatedData).sort((a, b) => {
+      const aDate = new Date(a);
+      const bDate = new Date(b);
+      return aDate.getTime() - bDate.getTime();
+    });
 
-      const datasets = this.createDatasets(aggregatedData);
+    const datasets = this.createDatasets(aggregatedData);
 
-      Chart.register(CategoryScale, LinearScale, BarController, BarElement);
+    Chart.register(CategoryScale, LinearScale, BarController, BarElement);
 
-      this.chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: datasets,
-        },
-        options: {
-          responsive: true,
-          scales: {
-            x: {
-              type: 'category',
-              stacked: true,
-            },
-            y: {
-              stacked: true,
-              beginAtZero: true,
-            },
+    this.chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: datasets,
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            type: 'category',
+            stacked: true,
           },
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: context => {
-                  const dataset = context.dataset;
-                  const value = dataset.data[context.dataIndex] as number;
-                  return value.toLocaleString(undefined, { maximumFractionDigits: 2 });
-                },
+          y: {
+            stacked: true,
+            beginAtZero: true,
+          },
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: context => {
+                const dataset = context.dataset;
+                const value = dataset.data[context.dataIndex] as number;
+                return value.toLocaleString(undefined, { maximumFractionDigits: 2 });
               },
             },
           },
         },
-      });
-
+      },
+    });
   }
 
   expensesByMonth() {
@@ -158,14 +156,14 @@ export class ExpenseChart {
 
   render() {
     if (this.expenses.length > 0) {
-        return (
-          <div>
-            <h2>Stacked Bar of Monthly Expenses</h2>
-            <div class="chart-container">
-              <canvas></canvas>
-            </div>
+      return (
+        <div>
+          <h2>Stacked Bar of Monthly Expenses</h2>
+          <div class="chart-container">
+            <canvas></canvas>
           </div>
-        );
-      }
+        </div>
+      );
+    }
   }
 }

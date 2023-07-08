@@ -6,7 +6,6 @@ import { Component, h } from '@stencil/core';
   shadow: true,
 })
 export class WaveLoading {
-
   render() {
     return (
       <div class="center">
@@ -16,5 +15,4 @@ export class WaveLoading {
       </div>
     );
   }
-
 }
