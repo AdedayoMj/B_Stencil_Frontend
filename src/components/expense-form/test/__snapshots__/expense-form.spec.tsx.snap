@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExpenseForm should render expense form correctly 1`] = `
+<expense-form>
+  <mock:shadow-root>
+    <app-modal>
+      <form class="form">
+        <div class="form-group">
+          <label htmlfor="date">
+            Date
+          </label>
+          <input id="date" name="date" type="date" value="">
+        </div>
+        <div class="form-group">
+          <label htmlfor="description">
+            Expense Details
+          </label><textarea id="description" name="description" rows="5" value=""></textarea>
+        </div>
+        <div class="form-group">
+          <label htmlfor="amount">
+            Amount
+          </label>
+          <input id="amount" name="amount" type="number">
+        </div>
+        <div class="form-group">
+          <button type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
+    </app-modal>
+  </mock:shadow-root>
+</expense-form>
+`;

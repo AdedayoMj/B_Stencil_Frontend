@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExpenseList should handle pagination correctly 1`] = `
+<expense-list>
+  <mock:shadow-root>
+    <h1>
+      No expenses
+    </h1>
+  </mock:shadow-root>
+</expense-list>
+`;
+
+exports[`ExpenseList should handle pagination correctly 2`] = `
+<expense-list>
+  <mock:shadow-root>
+    <h1>
+      No expenses
+    </h1>
+  </mock:shadow-root>
+</expense-list>
+`;
+
+exports[`ExpenseList should render expense list correctly 1`] = `
+<expense-list>
+  <mock:shadow-root>
+    <h1>
+      No expenses
+    </h1>
+  </mock:shadow-root>
+</expense-list>
+`;

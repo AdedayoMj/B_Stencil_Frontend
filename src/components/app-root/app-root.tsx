@@ -1,7 +1,7 @@
 import { Component, h, Method, JSX, State } from '@stencil/core';
-
-import lightIcon from '../../assets/sunshine.svg';
-import darkIcon from '../../assets/moon.svg';
+import { sunshine as lightIcon, moon as darkIcon } from '../../assets/icon';
+// import lightIcon from '../../assets/sunshine.svg';
+// import darkIcon from '../../assets/moon.svg';
 import { ExpenseData } from '../../types';
 
 import { expenseStore } from '../../store/expense-store';
@@ -57,11 +57,8 @@ export class AppRoot {
 
   renderIcon(): JSX.Element {
     const toggleIcon = this.theme === 'light' ? lightIcon : darkIcon;
-    return (
-      <div class="iconContainer">
-        <img class="iconImage" src={toggleIcon} alt="Toggle Icon" />
-      </div>
-    );
+    const iconElement = <span innerHTML={toggleIcon}></span>;
+    return <div class="iconContainer">{iconElement}</div>;
   }
 
   render() {
@@ -77,7 +74,7 @@ export class AppRoot {
         </header>
 
         <div class="container">
-          <button class="createExpenseButton" onClick={() => this.openForm()}>
+          <button id="create expense" class="createExpenseButton" onClick={() => this.openForm()}>
             Create Expense
           </button>
           {this.showForm && <expense-form showForm={this.showForm}></expense-form>}

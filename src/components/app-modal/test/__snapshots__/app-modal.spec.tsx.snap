@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppModal should close the modal when close button is clicked 1`] = `
+<app-modal>
+  <mock:shadow-root>
+    <div aria-modal="false" class="modal" role="dialog" tabindex="-1">
+      <div class="modal-content">
+        <span class="close">
+          ×
+        </span>
+        <slot></slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+</app-modal>
+`;
+
+exports[`AppModal should close the modal when close button is clicked 2`] = `
+<app-modal>
+  <mock:shadow-root>
+    <div aria-modal="true" class="modal show" role="dialog" tabindex="-1">
+      <div class="modal-content">
+        <span class="close">
+          ×
+        </span>
+        <slot></slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+</app-modal>
+`;
+
+exports[`AppModal should close the modal when close button is clicked 3`] = `
+<app-modal>
+  <mock:shadow-root>
+    <div aria-modal="false" class="modal" role="dialog" tabindex="-1">
+      <div class="modal-content">
+        <span class="close">
+          ×
+        </span>
+        <slot></slot>
+      </div>
+    </div>
+  </mock:shadow-root>
+</app-modal>
+`;
